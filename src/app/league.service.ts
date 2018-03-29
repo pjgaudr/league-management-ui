@@ -8,10 +8,7 @@ export class LeagueService {
 
   private leaguesUrl = 'http://localhost:8080/leagues';  // URL to web api
 
-  private leagues = [
-    { id: 1, name: 'FakeLeague1' },
-    { id: 2, name: 'FakeLeague2' }
-  ];
+  private leagues = [];
 
   leaguesChanged = new Subject<void>();
 
@@ -24,6 +21,10 @@ export class LeagueService {
     return this.leagues.slice();
   }
     
+  getLeague(id): any {
+    return this.leagues.find(league => league.id == id);
+  }
+
   fetchLeagues()  {
     this.http.get(this.leaguesUrl)
       .map(
