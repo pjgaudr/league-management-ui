@@ -1,0 +1,17 @@
+mat-chip {
+    max-width: 50px;
+    color: white;
+    background-color: cornflowerblue;
+}
+
+.center {
+    width: 75%;
+    margin: 10px auto;
+}
+  
+.main-div {
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
