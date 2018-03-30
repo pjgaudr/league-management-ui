@@ -9,8 +9,6 @@ import { MatChip, MatChipList } from '@angular/material';
 })
 export class WelcomeComponent implements OnInit {
 
-  title = 'the Hockey League Management App';
-
   leagues = [];
   subscription;
 

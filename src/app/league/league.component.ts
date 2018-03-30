@@ -13,10 +13,10 @@ export class LeagueComponent implements OnInit {
   league;
   subscription;
 
-  userDisplayedColumns = ['id', 'name', 'email', 'position'];
-  userDataSource = new MatTableDataSource(USERS_ELEMENT_DATA);
+  playerDisplayedColumns = ['id', 'name', 'email', 'position'];
+  playerDataSource = new MatTableDataSource(PLAYERS_ELEMENT_DATA);
 
-  gameDisplayedColumns = ['id', 'date']
+  gameDisplayedColumns = ['id', 'date', 'asked', 'in', 'out'];
   gameDataSource = new MatTableDataSource(GAMES_ELEMENT_DATA);
   
   constructor(
@@ -31,7 +31,7 @@ export class LeagueComponent implements OnInit {
   }
 
 }
-const USERS_ELEMENT_DATA = [
+const PLAYERS_ELEMENT_DATA = [
   {
     "id": 0,
     "firstname": "Patrick",
@@ -45,13 +45,22 @@ const GAMES_ELEMENT_DATA = [
   {
     "id": 0,
     "date": "2017-09-01",
+    "asked": 5,
+    "in": 15,
+    "out": 8
   },
   {
     "id": 1,
     "date": "2017-09-08",
+    "asked": 0,
+    "in": 0,
+    "out": 0
   },
   {
     "id": 2,
     "date": "2017-09-15",
+    "asked": 0,
+    "in": 0,
+    "out": 0
   }
 ];
