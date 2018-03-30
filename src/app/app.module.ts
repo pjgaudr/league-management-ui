@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { MatChipsModule, MatTableModule } from '@angular/material';
+import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -30,6 +30,8 @@ const routes = [
     BrowserModule,
     MatChipsModule,
     MatTableModule,
+    MatToolbarModule,
+    MatIconModule,
     HttpModule,
     RouterModule.forRoot(routes)
   ],

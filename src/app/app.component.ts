@@ -1,4 +1,5 @@
 import { Component, OnInit, Injectable } from '@angular/core';
+import { MatIconRegistry } from '@angular/material';
  
 @Component({
   selector: 'app-root',
@@ -8,6 +9,8 @@ import { Component, OnInit, Injectable } from '@angular/core';
 
 @Injectable()
 export class AppComponent implements OnInit {
+
+  title = 'Hockey League Management';
 
   constructor() {
 
