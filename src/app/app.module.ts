@@ -7,14 +7,16 @@ import { AppComponent } from './app.component';
 import { LeagueService } from './league.service';
 import { LeagueComponent } from './league/league.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { UserComponent } from './user/user.component';
+import { PlayerComponent } from './player/player.component';
 import { GameComponent } from './game/game.component';
+import { AccountComponent } from './account/account.component';
 
 const routes = [
   { path: '', component: WelcomeComponent },
   { path: 'league/:id', component: LeagueComponent },
-  { path: 'user/:id', component: UserComponent },
+  { path: 'player/:id', component: PlayerComponent },
   { path: 'game/:id', component: GameComponent },
+  { path: 'account', component: AccountComponent },
   { path: '**', component: WelcomeComponent }
 ];
 
@@ -23,8 +25,9 @@ const routes = [
     AppComponent,
     LeagueComponent,
     WelcomeComponent,
-    UserComponent,
-    GameComponent
+    PlayerComponent,
+    GameComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

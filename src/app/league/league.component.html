@@ -1,10 +1,10 @@
 <h1>{{league.name}} league (id: {{league.id}})</h1>
 
 <h2>Players</h2>
-<mat-table #table [dataSource]="userDataSource">
+<mat-table #table [dataSource]="playerDataSource">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-      <mat-cell *matCellDef="let element"> <a routerLink="/user/{{element.id}}">{{element.id}}</a>  </mat-cell>
+      <mat-cell *matCellDef="let element"> <a routerLink="/player/{{element.id}}">{{element.id}}</a>  </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="name">
@@ -22,8 +22,8 @@
         <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
      </ng-container>
   
-    <mat-header-row *matHeaderRowDef="userDisplayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: userDisplayedColumns;"></mat-row>
+    <mat-header-row *matHeaderRowDef="playerDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: playerDisplayedColumns;"></mat-row>
 </mat-table>
 
 <h2>Games</h2>
@@ -38,6 +38,21 @@
       <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="gameDisplayedColumns"></mat-header-row>
+    <ng-container matColumnDef="asked">
+        <mat-header-cell *matHeaderCellDef> # Asked </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.asked}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="in">
+          <mat-header-cell *matHeaderCellDef> # In </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.in}} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="out">
+            <mat-header-cell *matHeaderCellDef> # Out </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.out}} </mat-cell>
+          </ng-container>
+      
+                <mat-header-row *matHeaderRowDef="gameDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: gameDisplayedColumns;"></mat-row>
   </mat-table>
