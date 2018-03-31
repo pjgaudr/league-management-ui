@@ -1,0 +1,60 @@
+<mat-tab-group>
+    <mat-tab label="Players">
+        <mat-table #table [dataSource]="playerDataSource">
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <a routerLink="/player/{{element.id}}">{{element.id}}</a>  </mat-cell>
+            </ng-container>
+        
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.lastname}}, {{element.firstname}} </mat-cell>
+            </ng-container>
+        
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+            </ng-container>
+        
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef> Position </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+             </ng-container>
+          
+            <mat-header-row *matHeaderRowDef="playerDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: playerDisplayedColumns;"></mat-row>
+        </mat-table>              
+    </mat-tab>
+
+    <mat-tab label="Games">
+        <mat-table #table2 [dataSource]="gameDataSource">
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <a routerLink="/game/{{element.id}}">{{element.id}}</a> </mat-cell>
+            </ng-container>
+        
+            <ng-container matColumnDef="date">
+              <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+            </ng-container>
+        
+            <ng-container matColumnDef="asked">
+                <mat-header-cell *matHeaderCellDef> # Asked </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.asked}} </mat-cell>
+              </ng-container>
+          
+              <ng-container matColumnDef="in">
+                  <mat-header-cell *matHeaderCellDef> # In </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.in}} </mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="out">
+                    <mat-header-cell *matHeaderCellDef> # Out </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.out}} </mat-cell>
+                  </ng-container>
+              
+                        <mat-header-row *matHeaderRowDef="gameDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: gameDisplayedColumns;"></mat-row>
+          </mat-table>        
+    </mat-tab>
+</mat-tab-group>

@@ -1,9 +1,23 @@
 <mat-toolbar color="primary">
-    <span routerLink="/">{{title}}</span>
-    
+    <span>
+        <mat-icon class="example-icon" routerLink="/welcome">home</mat-icon>
+    </span>
+    <span *ngIf="selectedLeague !== undefined">{{selectedLeague.name}}</span>
+    <!--span>
+        League:
+        <mat-form-field>
+            <mat-select>
+                <mat-option *ngFor="let league of leagues" [value]="league.id">
+                {{ league.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </span-->
     <!-- This fills the remaining space of the current row -->
     <span class="example-fill-remaining-space"></span>
     
+    <span routerLink="/admin">Admin</span>
+
     <span>
         <mat-icon class="example-icon" routerLink="/account">account_circle</mat-icon>
     </span>
