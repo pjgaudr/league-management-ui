@@ -1,5 +1,49 @@
 <!--div *ngIf="league !== undefined">
   <h1>{{league.name}} league</h1>
 </div-->
+<mat-tab-group>
+  <mat-tab label="Upcoming Games">
+    <mat-table #table2 [dataSource]="gameDataSource">
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.date}} </mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="available">
+            <mat-header-cell *matHeaderCellDef> Available? </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+              <mat-slide-toggle [checked]="element.available"></mat-slide-toggle> 
+            </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="inviteStatus">
+            <mat-header-cell *matHeaderCellDef> Invitation Status </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+              {{element.inviteStatus}} 
+            </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="menu">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+              <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="element.inviteStatus != '--'">
+                  <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item [disabled]="element.inviteStatus == 'Accepted'">
+                  <mat-icon>check_circle</mat-icon>
+                  <span>Accept Invitation</span>
+                </button>
+                <button mat-menu-item [disabled]="element.inviteStatus == 'Declined'">
+                  <mat-icon>clear</mat-icon>
+                  <span>Decline Invitation</span>
+                </button>
+              </mat-menu>
+            </mat-cell>
+        </ng-container>
 
-<h2>Upcoming Games</h2>
+        <mat-header-row *matHeaderRowDef="gameDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: gameDisplayedColumns;"></mat-row>
+      </mat-table>        
+  </mat-tab>
+</mat-tab-group>

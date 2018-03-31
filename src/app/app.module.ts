@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule } from '@angular/material';
+import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule, MatSlideToggleModule, MatMenuModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -41,8 +41,10 @@ const routes = [
     MatTableModule,
     MatToolbarModule,
     MatIconModule,
+    MatMenuModule,
     MatTabsModule,
     MatSelectModule,
+    MatSlideToggleModule,
     HttpModule,
     NoopAnimationsModule,
     RouterModule.forRoot(routes)
