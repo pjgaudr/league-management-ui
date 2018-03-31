@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule, MatSlideToggleModule, MatMenuModule } from '@angular/material';
+import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule, MatSlideToggleModule, MatMenuModule, MatCheckboxModule, MatDatepicker, MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -18,8 +18,6 @@ const routes = [
   { path: '', component: WelcomeComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'league/:id', component: LeagueComponent },
-  { path: 'player/:id', component: PlayerComponent },
-  { path: 'game/:id', component: GameComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'account', component: AccountComponent },
   { path: '**', component: WelcomeComponent }
@@ -45,6 +43,9 @@ const routes = [
     MatTabsModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     HttpModule,
     NoopAnimationsModule,
     RouterModule.forRoot(routes)

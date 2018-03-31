@@ -53,7 +53,7 @@ const GAMES_ELEMENT_DATA = [
     "date": "2017-09-22",
     "available": false,
     "inviteStatus": "--",
-  }
+  },
   {
     "id": 4,
     "date": "2017-09-29",
