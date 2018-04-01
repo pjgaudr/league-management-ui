@@ -2,7 +2,7 @@
     <span>
         <mat-icon class="example-icon" routerLink="/welcome">home</mat-icon>
     </span>
-    <span *ngIf="selectedLeague !== undefined">{{selectedLeague.name}}</span>
+    <span *ngIf="selectedLeague !== undefined" routerLink="/league/{{selectedLeague.id}}">{{selectedLeague.name}}</span>
     <!--span>
         League:
         <mat-form-field>
