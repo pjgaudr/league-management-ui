@@ -8,11 +8,12 @@ import { LeagueService } from './league.service';
 import { LeagueComponent } from './league/league.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PlayerComponent } from './player/player.component';
-import { GameComponent } from './game/game.component';
+import { LineupComponent } from './lineup/lineup.component';
 import { AdminComponent } from './admin/admin.component';
 import { AccountComponent } from './account/account.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
+import {DndModule} from 'ng2-dnd';
 
 const routes = [
   { path: '', component: WelcomeComponent },
@@ -29,7 +30,7 @@ const routes = [
     LeagueComponent,
     WelcomeComponent,
     PlayerComponent,
-    GameComponent,
+    LineupComponent,
     AdminComponent,
     AccountComponent
   ],
@@ -49,7 +50,8 @@ const routes = [
     MatSortModule,
     HttpModule,
     NoopAnimationsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    DndModule.forRoot()
   ],
   providers: [LeagueService],
   bootstrap: [AppComponent]
