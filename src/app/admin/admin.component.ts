@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatCheckbox, MatDatepicker } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatCheckbox, MatDatepicker, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-admin',
@@ -8,8 +8,13 @@ import { MatTableDataSource, MatCheckbox, MatDatepicker } from '@angular/materia
 })
 export class AdminComponent implements OnInit {
 
-  playerDisplayedColumns = ['name', 'email', 'position', 'availability', 'inviteStatus', 'checkbox'];
-  playerDataSource = new MatTableDataSource(PLAYERS_ELEMENT_DATA);
+  playerDisplayedColumns = ['name', 'email', 'position', 'available', 'inviteStatus', 'checkbox'];
+  playerDataSource = new MatTableDataSource(REGULAR_PLAYERS_ELEMENT_DATA);
+  spareDisplayedColumns = ['name', 'email', 'position', 'available', 'inviteStatus', 'checkbox'];
+  spareDataSource = new MatTableDataSource(SPARE_PLAYERS_ELEMENT_DATA);
+
+  @ViewChild(MatSort) sortRegular: MatSort;
+  @ViewChild(MatSort) sortSpare: MatSort;
 
   // gameDisplayedColumns = ['id', 'date', 'asked', 'in', 'out'];
   // gameDataSource = new MatTableDataSource(GAMES_ELEMENT_DATA);
@@ -27,9 +32,27 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    this.playerDataSource.sort = this.sortRegular;
+    this.playerDataSource.sortingDataAccessor = (item, property) => {
+      switch(property) {
+        case 'name': return item.lastname + "," + item.firstname;
+        default: return item[property];
+      }
+    }
+
+    this.spareDataSource.sort = this.sortSpare;
+    this.spareDataSource.sortingDataAccessor = (item, property) => {
+      switch(property) {
+        case 'name': return item.lastname + "," + item.firstname;
+        default: return item[property];
+      }
+    }
+  }
+
 }
 
-const PLAYERS_ELEMENT_DATA = [
+const REGULAR_PLAYERS_ELEMENT_DATA = [
   {
     "id": 0,
     "firstname": "Patrick",
@@ -62,16 +85,6 @@ const PLAYERS_ELEMENT_DATA = [
   },
   {
     "id": 3,
-    "firstname": "Benoit",
-    "lastname": "Roy",
-    "email": "benoit.roy@nnhl.com",
-    "type": "spare",
-    "position": "forward",
-    "available": true,
-    "inviteStatus": "--"
-  },
-  {
-    "id": 4,
     "firstname": "Guy",
     "lastname": "Beausoleil",
     "email": "guy.beausoleil@nnhl.com",
@@ -81,7 +94,7 @@ const PLAYERS_ELEMENT_DATA = [
     "inviteStatus": "Invited"
   },
   {
-    "id": 5,
+    "id": 4,
     "firstname": "Luc",
     "lastname": "Orsali",
     "email": "luc.orsali@nnhl.com",
@@ -90,6 +103,29 @@ const PLAYERS_ELEMENT_DATA = [
     "available": true,
     "inviteStatus": "Accepted"
   },
+];
+
+const SPARE_PLAYERS_ELEMENT_DATA = [
+  {
+    "id": 10,
+    "firstname": "Benoit",
+    "lastname": "Roy",
+    "email": "benoit.roy@nnhl.com",
+    "type": "spare",
+    "position": "forward",
+    "available": true,
+    "inviteStatus": "--"
+  },
+  {
+    "id": 11,
+    "firstname": "Matt",
+    "lastname": "Bowen",
+    "email": "matt.bowen@nnhl.com",
+    "type": "spare",
+    "position": "forward",
+    "available": true,
+    "inviteStatus": "--"
+  }
 ];
 
 const GAMES_ELEMENT_DATA = [
