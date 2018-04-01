@@ -1,0 +1,107 @@
+<!--
+<div class="row">
+    <div class="col-sm-3">
+        <div class="panel panel-success">
+            <div class="panel-heading">Available to drag</div>
+            <div class="panel-body">
+                <div class="panel panel-default" dnd-draggable [dragEnabled]="true">
+                    <div class="panel-body">
+                        <div>Drag Me</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div dnd-droppable class="panel panel-info" (onDropSuccess)="simpleDrop=$event">
+            <div class="panel-heading">Place to drop</div>
+            <div class="panel-body">
+                <div *ngIf="simpleDrop">Item was dropped here</div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+<div class="row example-margin" >
+    <div class="col-sm-3">
+        <div class="panel panel-info"
+            dnd-sortable-container [sortableData]="team1.widgets" [dropZones]="['widget-dropZone']">
+            <div class="panel-heading">
+                {{team1.name}}
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li *ngFor="let widget of team1.widgets; let x = index" class="list-group-item"
+                        dnd-sortable [sortableIndex]="x" [dragEnabled]="!dragOperation"
+                        [dragData]="widget">{{widget.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-primary"
+            dnd-sortable-container [sortableData]="players.widgets" [dropZones]="['widget-dropZone']">
+            <div class="panel-heading">
+                {{players.name}}
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li *ngFor="let widget of players.widgets; let x = index" class="list-group-item"
+                        dnd-sortable [sortableIndex]="x" [dragEnabled]="!dragOperation"
+                        [dragData]="widget">{{widget.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-info"
+            dnd-sortable-container [sortableData]="team2.widgets" [dropZones]="['widget-dropZone']">
+            <div class="panel-heading">
+                {{team2.name}}
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li *ngFor="let widget of team2.widgets; let x = index" class="list-group-item"
+                        dnd-sortable [sortableIndex]="x" [dragEnabled]="!dragOperation"
+                        [dragData]="widget">{{widget.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--div class="row">
+    <div class="col-sm-3">
+        <div dnd-sortable-container [sortableData]="containers" [dropZones]="['container-dropZone']">
+            <div class="col-sm3"
+                    *ngFor="let container of containers; let i = index"
+                    dnd-sortable [sortableIndex]="i" [dragEnabled]="dragOperation">
+                <div class="panel panel-info"
+                    dnd-sortable-container [sortableData]="container.widgets" [dropZones]="['widget-dropZone']">
+                    <div class="panel-heading">
+                        {{container.name}}
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li *ngFor="let widget of container.widgets; let x = index" class="list-group-item"
+                                dnd-sortable [sortableIndex]="x" [dragEnabled]="!dragOperation"
+                                [dragData]="widget">{{widget.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">Widgets</div>
+            <div class="panel-body" dnd-droppable (onDropSuccess)="addTo($event)" [dropZones]="['widget-dropZone']">
+                <div *ngFor="let widget of widgets" class="panel panel-default">
+                    <div class="panel-body">
+                        {{widget.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div-->
