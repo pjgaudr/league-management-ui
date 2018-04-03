@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 
@@ -39,7 +39,18 @@ export class LeagueService {
   }
 
   fetchLeagues()  {
-    this.http.get(this.leaguesUrl)
+    var auth = localStorage.getItem('currentUser');
+
+    const headerDict = {
+      "Authorization": "Basic " + auth,
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+      withCredentials: true
+    };
+
+    this.http.get(this.leaguesUrl, requestOptions)
       .map(
         (response: Response) => {
             return response.json();

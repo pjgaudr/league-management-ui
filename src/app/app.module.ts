@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule, MatSlideToggleModule, MatMenuModule, MatCheckboxModule, MatDatepicker, MatDatepickerModule, MatNativeDateModule, MatSortModule} from '@angular/material';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
 import { AppComponent } from './app.component';
-import { LeagueService } from './league.service';
+import { LeagueService } from './_services/league.service';
 import { LeagueComponent } from './league/league.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PlayerComponent } from './player/player.component';
@@ -14,14 +14,19 @@ import { AccountComponent } from './account/account.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {DndModule} from 'ng2-dnd';
+import { LoginComponent } from './login/login.component';
+import { AuthenticationService } from './_services/authentication.service';
+import { FormsModule } from '@angular/forms';
+import { AuthGuard } from './_guards/index';
 
 const routes = [
-  { path: '', component: WelcomeComponent },
-  { path: 'welcome', component: WelcomeComponent },
-  { path: 'league/:id', component: LeagueComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'account', component: AccountComponent },
-  { path: '**', component: WelcomeComponent }
+  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
+  { path: 'league/:id', component: LeagueComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: '**', component: LoginComponent }
 ];
 
 @NgModule({
@@ -32,10 +37,12 @@ const routes = [
     PlayerComponent,
     LineupComponent,
     AdminComponent,
-    AccountComponent
+    AccountComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     MatChipsModule,
     MatTableModule,
     MatToolbarModule,
@@ -53,7 +60,7 @@ const routes = [
     RouterModule.forRoot(routes),
     DndModule.forRoot()
   ],
-  providers: [LeagueService],
+  providers: [LeagueService, AuthenticationService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

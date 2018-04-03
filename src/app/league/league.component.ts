@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { LeagueService } from '../league.service';
+import { LeagueService } from '../_services/league.service';
 import { MatTableDataSource, MatSlideToggle, MatMenu } from '@angular/material';
 
 @Component({
