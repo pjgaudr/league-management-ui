@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LeagueService } from '../league.service';
+import { LeagueService } from '../_services/league.service';
 import { MatChip, MatChipList } from '@angular/material';
 
 @Component({

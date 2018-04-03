@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable, ChangeDetectorRef } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
-import { LeagueService } from './league.service';
+import { LeagueService } from './_services/league.service';
  
 @Component({
   selector: 'app-root',

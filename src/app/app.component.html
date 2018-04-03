@@ -2,17 +2,9 @@
     <span>
         <mat-icon class="example-icon" routerLink="/welcome">home</mat-icon>
     </span>
-    <span *ngIf="selectedLeague !== undefined" routerLink="/league/{{selectedLeague.id}}">{{selectedLeague.name}}</span>
-    <!--span>
-        League:
-        <mat-form-field>
-            <mat-select>
-                <mat-option *ngFor="let league of leagues" [value]="league.id">
-                {{ league.name }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </span-->
+    <span *ngIf="selectedLeague !== undefined" routerLink="/league/{{selectedLeague.id}}">
+        {{selectedLeague.name}}
+    </span>
     <!-- This fills the remaining space of the current row -->
     <span class="example-fill-remaining-space"></span>
     
