@@ -18,10 +18,13 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './_services/authentication.service';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './_guards/index';
+import { RegisterComponent } from './register/register.component';
+import { UserService } from './_services/user.service';
 
 const routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
   { path: 'league/:id', component: LeagueComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
@@ -38,7 +41,8 @@ const routes = [
     LineupComponent,
     AdminComponent,
     AccountComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,7 @@ const routes = [
     RouterModule.forRoot(routes),
     DndModule.forRoot()
   ],
-  providers: [LeagueService, AuthenticationService, AuthGuard],
+  providers: [LeagueService, AuthenticationService, UserService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
