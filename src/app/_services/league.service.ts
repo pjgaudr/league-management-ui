@@ -28,7 +28,14 @@ export class LeagueService {
     return this.selectedLeague;
   }
 
+  getDefaultLeague(): any {
+    return this.leagues[0];
+  }
+
   getLeagues() {
+    if(this.leagues.length == 0)
+      this.fetchLeagues();
+      
     return this.leagues.slice();
   }
     
@@ -64,5 +71,36 @@ export class LeagueService {
             this.leaguesChanged.next();
         }
     );
-  } 
+  }
+  
+  createLeague(leagueName: String) {
+    var authenticateUrl = "http://localhost:8080/leagues?leagueName=" + leagueName;
+    var auth = localStorage.getItem('currentUser');
+
+    const headerDict = {
+      "Authorization": "Basic " + auth,
+      'Content-Type': 'application/json' 
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+      withCredentials: true
+    };
+
+    return this.http.post(authenticateUrl, '{}', requestOptions)
+      .map(
+        (response: Response) => {
+            if(response.status == 201)
+            {
+              console.log("League " + leagueName + " created successfully");
+            }
+            else
+            {
+              console.error("Could not create league " + leagueName);
+            }
+
+            return response.json();
+        }
+      );
+  }
 }

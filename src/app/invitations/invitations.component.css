@@ -1,0 +1,13 @@
+.example-margin {
+    margin: 0 10px;
+}
+
+h3 {
+    -webkit-margin-after: 0px;
+    -webkit-margin-before: 0.5em;
+}
+
+
+.mat-row {
+    min-height: 36px;
+}

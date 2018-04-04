@@ -1,0 +1,5 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.small-padding {
+    padding: 10px;
+}

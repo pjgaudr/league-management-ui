@@ -1,12 +1,27 @@
-<div>Game on:  
-  <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" placeholder="Choose a date">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
-</div>
+<!--div *ngIf="leagues.length > 1" class="row">
+    <div class="col-sm-4">
+    <mat-form-field>
+      <mat-select placeholder="Select a league" [value]="selectedOption">
+        <mat-option *ngFor="let league of leagues" [value]="league.id">
+          {{ league.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+  
+    <div class="col-sm-4 small-padding">
+      <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" placeholder="Choose a game">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+    </div>
+</div-->
 
 <mat-tab-group class="demo-tab-group">
+  <mat-tab label="Leagues">
+      <app-league-mgt></app-league-mgt>
+  </mat-tab>
   <mat-tab label="Invitations">
-    <app-player></app-player>
+    <app-invitations></app-invitations>
   </mat-tab>
   <mat-tab label="Lineup">
     <app-lineup></app-lineup>

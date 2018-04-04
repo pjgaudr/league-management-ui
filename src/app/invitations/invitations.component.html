@@ -1,3 +1,9 @@
+<div>
+    <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" placeholder="Choose a game">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+</div>
+  
 <h3>Regular Players</h3>
 <mat-table #table [dataSource]="playerDataSource" matSort>
     <ng-container matColumnDef="name">

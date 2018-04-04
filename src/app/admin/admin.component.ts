@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDatepicker, MatSort } from '@angular/material';
+import { LeagueService } from '../_services/league.service';
 
 @Component({
   selector: 'app-admin',
@@ -8,16 +9,19 @@ import { MatDatepicker, MatSort } from '@angular/material';
 })
 export class AdminComponent implements OnInit {
 
-  myFilter = (d: Date): boolean => {
-    const day = d.getDay();
-    // Prevent Saturday and Sunday from being selected.
-    return day == 5;
-  }
-  
-  startDate = new Date(2017, 8, 1);
+  leagues = [];
+  subscription;
+  selectedOption = 1;
  
-  constructor() { }
+  constructor(
+    private leagueService: LeagueService) { }
 
   ngOnInit() {
+    this.leagues = this.leagueService.getLeagues();
+    this.subscription = this.leagueService.leaguesChanged.subscribe(
+      () => {
+        this.leagues = this.leagueService.getLeagues();
+      }
+    );
   }
 }

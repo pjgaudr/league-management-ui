@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
+import { LeagueService } from '../_services/league.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService,
+      private leagueService: LeagueService
       /*private alertService: AlertService*/) { }
 
   ngOnInit() {
@@ -24,7 +26,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.logout();
 
       // get return url from route parameters or default to '/welcome'
-      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/welcome';
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/welcome';      
   }
 
   login() {
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.login(this.model.username, this.model.password)
           .subscribe(
               data => {
+                  this.leagueService.fetchLeagues();
                   this.router.navigate(['/welcome']);
               },
               error => {
