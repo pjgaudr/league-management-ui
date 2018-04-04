@@ -9,6 +9,9 @@ import { LeagueService } from '../_services/league.service';
 export class LeagueMgtComponent implements OnInit {
   model: any = {};
   gameModel: any = {};
+  
+  leagues = [];
+  subscription;
 
   loading = false;
   gameLoading = false;
@@ -17,6 +20,12 @@ export class LeagueMgtComponent implements OnInit {
   constructor(private leagueService: LeagueService) { }
 
   ngOnInit() {
+    this.leagues = this.leagueService.getLeagues();
+    this.subscription = this.leagueService.leaguesChanged.subscribe(
+      () => {
+        this.leagues = this.leagueService.getLeagues();
+      }
+    );
   }
 
   createLeague() {
@@ -26,6 +35,7 @@ export class LeagueMgtComponent implements OnInit {
             data => {
                 //this.alertService.success('Registration successful', true);
                 console.log('League created successfully');
+                this.loading = false;
             },
             error => {
                 //this.alertService.error(error);
@@ -35,6 +45,9 @@ export class LeagueMgtComponent implements OnInit {
   }
 
   createGames() {
+    // TODO: call the /games/newseason REST call
     this.gameLoading = true;
+    console.log(this.gameModel);
+    this.gameLoading = false;
   }
 }
