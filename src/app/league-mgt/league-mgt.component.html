@@ -26,7 +26,7 @@
                 <label for="leagueId">League</label>
                 <div>
                     <select class="form-control-date-picker" name="leagueId" [(ngModel)]="gameModel.leagueId" #leagueId="ngModel" required>
-                        <option selected="true" data-hidden="true">Choose a league...</option>
+                        <option selected>Choose a league...</option>
                         <option *ngFor="let league of leagues" [value]="league.id">
                             {{ league.name }}
                         </option>
