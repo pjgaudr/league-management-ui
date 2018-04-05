@@ -14,6 +14,8 @@ export class AccountComponent implements OnInit {
   leagues = [];
   subscription;
 
+  user;
+
   loading = false;
 
   constructor(private leagueService: LeagueService) { }
@@ -25,6 +27,8 @@ export class AccountComponent implements OnInit {
         this.leagues = this.leagueService.getLeagues();
       }
     );
+
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   requestToJoin() {
