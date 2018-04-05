@@ -33,13 +33,13 @@ export class AppComponent implements OnInit {
       }
     );
 
-    this.selectedLeagueChangedSubscription = this.leagueService.selectedLeagueChanged.subscribe(
-      () => {
-        this.selectedLeague = this.leagueService.getSelectedLeague();
-        console.log("selectedLeague changed, trying to refresh to:" );
-        this.changeDetectorRef.detectChanges();
-      }       
-    );
+    // this.selectedLeagueChangedSubscription = this.leagueService.selectedLeagueChanged.subscribe(
+    //   () => {
+    //     this.selectedLeague = this.leagueService.getSelectedLeague();
+    //     console.log("selectedLeague changed, trying to refresh to:" );
+    //     this.changeDetectorRef.detectChanges();
+    //   }       
+    // );
   }
   
 }

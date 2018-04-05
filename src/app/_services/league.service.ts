@@ -9,28 +9,13 @@ export class LeagueService {
   private leaguesUrl = 'http://localhost:8080/leagues';  // URL to web api
 
   private leagues = [];
-  private selectedLeague;
 
   leaguesChanged = new Subject<void>();
-  selectedLeagueChanged = new Subject<void>();
 
   constructor(
     private http: Http) {
 
     }
-
-  setSelectedLeague(league) {
-    this.selectedLeague = league;
-    this.selectedLeagueChanged.next();
-  }
-
-  getSelectedLeague() {
-    return this.selectedLeague;
-  }
-
-  getDefaultLeague(): any {
-    return this.leagues[0];
-  }
 
   getLeagues() {
     if(this.leagues.length == 0)
@@ -41,7 +26,7 @@ export class LeagueService {
     
   getLeague(id): any {
     var league = this.leagues.find(league => league.id == id);
-    this.setSelectedLeague(league);
+    // this.setSelectedLeague(league);
     return league;
   }
 
@@ -103,4 +88,20 @@ export class LeagueService {
         }
       );
   }
+
+  // private selectedLeague;
+  // selectedLeagueChanged = new Subject<void>();
+  
+  // setSelectedLeague(league) {
+  //   this.selectedLeague = league;
+  //   this.selectedLeagueChanged.next();
+  // }
+
+  // getSelectedLeague() {
+  //   return this.selectedLeague;
+  // }
+
+  // getDefaultLeague(): any {
+  //   return this.leagues[0];
+  // }
 }

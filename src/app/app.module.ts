@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule, MatSlideToggleModule, MatMenuModule, MatCheckboxModule, MatDatepicker, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatCardModule, MatExpansionModule} from '@angular/material';
+import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule, MatSlideToggleModule, MatMenuModule, MatCheckboxModule, MatDatepicker, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatCardModule, MatExpansionModule, MatGridListModule} from '@angular/material';
 import { NgModule, Injectable } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule, ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
@@ -63,6 +63,7 @@ const routes = [
     MatSortModule,
     MatCardModule,
     MatExpansionModule,
+    MatGridListModule,
     HttpModule,
     NoopAnimationsModule,
     RouterModule.forRoot(routes),
