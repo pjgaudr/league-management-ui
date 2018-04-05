@@ -1,6 +1,9 @@
 <!--div *ngIf="league !== undefined">
   <h1>{{league.name}} league</h1>
 </div-->
+<div *ngIf="leagues.length == 0">
+  <p>You are not registered to any league.  Please first register to a league in your <a routerLink="/account">Profile</a></p>
+</div>
 <div *ngIf="leagues.length > 1">
   <mat-form-field>
     <mat-select placeholder="Select a league">
