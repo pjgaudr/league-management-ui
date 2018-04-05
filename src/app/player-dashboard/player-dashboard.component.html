@@ -34,8 +34,8 @@
   <ng-container matColumnDef="menu">
       <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
       <mat-cell *matCellDef="let element"> 
-        <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="element.inviteStatus != '--'">
-            <mat-icon>more_vert</mat-icon>
+        <button class="ng-star-inserted-transparent" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="element.inviteStatus != '--'">
+            <mat-icon>more_horizon</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item [disabled]="element.inviteStatus == 'Accepted'">
