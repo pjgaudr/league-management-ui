@@ -7,9 +7,11 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p>Id: 1</p>
-          <p>Username:patrick.gaudreau@nnhl.com</p>
-          <p>Roles: admin, nnhl-manager</p>
+          <p>Id: {{user.id}}</p>
+          <p>User: {{user.email}}</p>
+          <p>Firstname: {{user.firstName}}</p>
+          <p>Lastname: {{user.lastName}}</p>
+          <p>Position: {{user.position}}</p>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

@@ -21,13 +21,16 @@ export class AuthenticationService {
           withCredentials: true
         };
     
-        return this.http.post(authenticateUrl, '{}', requestOptions)
+        return this.http.post(authenticateUrl + "?email=" + username, '{}', requestOptions)
           .map(
             (response: Response) => {
-                if(response.status == 204)
+                if(response.status == 200)
                 {
                   console.log("Login successfull as " + username);
-                  localStorage.setItem('currentUser', auth);
+                  var user = response.json();
+                  user.auth = auth;
+                  console.log(user);
+                  localStorage.setItem('currentUser', JSON.stringify(user));
                 }
                 else
                 {

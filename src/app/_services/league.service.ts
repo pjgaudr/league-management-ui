@@ -31,10 +31,10 @@ export class LeagueService {
   }
 
   fetchLeagues()  {
-    var auth = localStorage.getItem('currentUser');
+    var user = JSON.parse(localStorage.getItem('currentUser'));
 
     const headerDict = {
-      "Authorization": "Basic " + auth,
+      "Authorization": "Basic " + user.auth,
     }
     
     const requestOptions = {                                                                                                                                                                                 
@@ -60,10 +60,10 @@ export class LeagueService {
   
   createLeague(leagueName: String) {
     var authenticateUrl = "http://localhost:8080/leagues?leagueName=" + leagueName;
-    var auth = localStorage.getItem('currentUser');
+    var user = JSON.parse(localStorage.getItem('currentUser'));
 
     const headerDict = {
-      "Authorization": "Basic " + auth,
+      "Authorization": "Basic " + user.auth,
       'Content-Type': 'application/json' 
     }
     
