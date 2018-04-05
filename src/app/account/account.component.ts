@@ -11,8 +11,11 @@ export class AccountComponent implements OnInit {
   model: any = {};
   gameModel: any = {};
   
+  allLeagues = [];
+  allLeaguesSubscription;
+
   leagues = [];
-  subscription;
+  leaguesSubscription;
 
   user;
 
@@ -21,8 +24,15 @@ export class AccountComponent implements OnInit {
   constructor(private leagueService: LeagueService) { }
 
   ngOnInit() {
+    this.allLeagues = this.leagueService.getAllLeagues();
+    this.allLeaguesSubscription = this.leagueService.allLeaguesChanged.subscribe(
+      () => {
+        this.allLeagues = this.leagueService.getAllLeagues();
+      }
+    );
+
     this.leagues = this.leagueService.getLeagues();
-    this.subscription = this.leagueService.leaguesChanged.subscribe(
+    this.leaguesSubscription = this.leagueService.leaguesChanged.subscribe(
       () => {
         this.leagues = this.leagueService.getLeagues();
       }

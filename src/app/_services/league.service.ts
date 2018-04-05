@@ -9,19 +9,36 @@ export class LeagueService {
   private leaguesUrl = 'http://localhost:8080/leagues';  // URL to web api
 
   private leagues = [];
-
+  private leaguesInitialized = false;
+  private leaguesLoading = false;
   leaguesChanged = new Subject<void>();
+
+  private allLeagues = [];
+  private allLeaguesInitialized = false;
+  private allLeaguesLoading = false;
+  allLeaguesChanged = new Subject<void>();
 
   constructor(
     private http: Http) {
 
     }
-
+    
   getLeagues() {
-    if(this.leagues.length == 0)
+    if(!this.leaguesInitialized && !this.leaguesLoading)
+    {
       this.fetchLeagues();
+    }
       
     return this.leagues.slice();
+  }
+    
+  getAllLeagues() {
+    if(!this.allLeaguesInitialized && !this.allLeaguesLoading)
+    {
+      this.fetchAllLeagues();
+    }
+      
+    return this.allLeagues.slice();
   }
     
   getLeague(id): any {
@@ -31,6 +48,41 @@ export class LeagueService {
   }
 
   fetchLeagues()  {
+    this.leaguesLoading = true;
+    var user = JSON.parse(localStorage.getItem('currentUser'));
+
+    const headerDict = {
+      "Authorization": "Basic " + user.auth,
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+      withCredentials: true
+    };
+
+    var fetchUrl = this.leaguesUrl + "?playerId=" + user.id;
+    console.log(fetchUrl);
+
+    this.http.get(fetchUrl, requestOptions)
+      .map(
+        (response: Response) => {
+            return response.json();
+        }
+      )
+      .subscribe(
+        (data) => {
+            this.leaguesLoading = false;
+            this.leaguesInitialized = true;
+            this.leagues = data;
+            console.log('Fetched from server: ');
+            console.log(this.leagues);
+            this.leaguesChanged.next();
+        }
+    );
+  }
+  
+  fetchAllLeagues()  {
+    this.allLeaguesLoading = true;
     var user = JSON.parse(localStorage.getItem('currentUser'));
 
     const headerDict = {
@@ -50,14 +102,16 @@ export class LeagueService {
       )
       .subscribe(
         (data) => {
-            this.leagues = data;
+            this.allLeaguesLoading = false;
+            this.allLeaguesInitialized = true;
+            this.allLeagues = data;
             console.log('Fetched from server: ');
-            console.log(this.leagues);
-            this.leaguesChanged.next();
+            console.log(this.allLeagues);
+            this.allLeaguesChanged.next();
         }
     );
   }
-  
+
   createLeague(leagueName: String) {
     var authenticateUrl = "http://localhost:8080/leagues?leagueName=" + leagueName;
     var user = JSON.parse(localStorage.getItem('currentUser'));

@@ -12,6 +12,7 @@
           <p>Firstname: {{user.firstName}}</p>
           <p>Lastname: {{user.lastName}}</p>
           <p>Position: {{user.position}}</p>
+          <p *ngFor="let league of leagues">Member of: {{league.name}}</p>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
@@ -28,7 +29,7 @@
                     <div>
                         <select class="form-control-date-picker" name="leagueId" [(ngModel)]="model.leagueId" #leagueId="ngModel" required>
                             <option selected>Choose a league...</option>
-                            <option *ngFor="let league of leagues" [value]="league.id">
+                            <option *ngFor="let league of allLeagues" [value]="league.id">
                                 {{ league.name }}
                             </option>
                         </select>
