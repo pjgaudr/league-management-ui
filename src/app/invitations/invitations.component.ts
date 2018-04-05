@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatCheckbox, MatDatepicker, MatSort } from '@angular/material';
 
 @Component({
-  selector: 'app-player',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.css']
+  selector: 'app-invitations',
+  templateUrl: './invitations.component.html',
+  styleUrls: ['./invitations.component.css']
 })
-export class PlayerComponent implements OnInit {
+export class InvitationsComponent implements OnInit {
 
   playerDisplayedColumns = ['name', 'email', 'position', 'available', 'inviteStatus', 'checkbox'];
   playerDataSource = new MatTableDataSource(REGULAR_PLAYERS_ELEMENT_DATA);
@@ -15,6 +15,13 @@ export class PlayerComponent implements OnInit {
 
   @ViewChild(MatSort) sortRegular: MatSort;
   @ViewChild(MatSort) sortSpare: MatSort;
+  
+  myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    // Prevent Saturday and Sunday from being selected.
+    return day == 5;
+  }  
+  startDate = new Date(2017, 8, 1);
 
   constructor() { }
 

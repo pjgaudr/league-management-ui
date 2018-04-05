@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LeagueService } from '../_services/league.service';
 
 @Component({
   selector: 'app-account',
@@ -7,9 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  model: any = {};
+  gameModel: any = {};
+  
+  leagues = [];
+  subscription;
+
+  loading = false;
+
+  constructor(private leagueService: LeagueService) { }
 
   ngOnInit() {
+    this.leagues = this.leagueService.getLeagues();
+    this.subscription = this.leagueService.leaguesChanged.subscribe(
+      () => {
+        this.leagues = this.leagueService.getLeagues();
+      }
+    );
+  }
+
+  requestToJoin() {
+    this.loading = true;
+    
   }
 
 }

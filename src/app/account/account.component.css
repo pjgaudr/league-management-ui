@@ -1,4 +1,11 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
 .right {
     float: right;
     padding: 10px;
+}
+
+.example-card {
+    width: 95%;
+    height: 90%;
 }

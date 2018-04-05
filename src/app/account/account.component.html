@@ -1,3 +1,46 @@
-<div class="right">
-  <a [routerLink]="['/']" class="btn btn-link">Logout</a>
-</div>
+<mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>
+            Account information <a [routerLink]="['/']" class="btn btn-link">(Logout)</a>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Id: 1</p>
+          <p>Username:patrick.gaudreau@nnhl.com</p>
+          <p>Roles: admin, nnhl-manager</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Request to join a league</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <form name="form2" (ngSubmit)="f2.form.valid && requestToJoin()" #f2="ngForm" novalidate>
+                <div class="form-group" [ngClass]="{ 'has-error': f2.submitted && !leagueId.valid }">
+                    <label for="leagueId">League</label>
+                    <div>
+                        <select class="form-control-date-picker" name="leagueId" [(ngModel)]="model.leagueId" #leagueId="ngModel" required>
+                            <option selected>Choose a league...</option>
+                            <option *ngFor="let league of leagues" [value]="league.id">
+                                {{ league.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div *ngIf="f2.submitted && !leagueId.valid" class="help-block">League is required</div>
+                </div>
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-primary">Request to join</button>
+                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                </div>    
+            </form>
+          </div>                
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
+  

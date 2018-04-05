@@ -1,0 +1,9 @@
+.mat-row {
+    min-height: 36px;
+}
+
+.ng-star-inserted-transparent {
+    background-color: transparent;
+    border-width: 0px;
+    border-color: transparent;
+}

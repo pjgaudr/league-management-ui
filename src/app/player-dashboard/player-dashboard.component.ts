@@ -4,13 +4,15 @@ import { LeagueService } from '../_services/league.service';
 import { MatTableDataSource, MatSlideToggle, MatMenu } from '@angular/material';
 
 @Component({
-  selector: 'app-league',
-  templateUrl: './league.component.html',
-  styleUrls: ['./league.component.css']
+  selector: 'app-player-dashboard',
+  templateUrl: './player-dashboard.component.html',
+  styleUrls: ['./player-dashboard.component.css']
 })
-export class LeagueComponent implements OnInit {
+export class PlayerDashboardComponent implements OnInit {
 
-  league;
+//  league;
+  leagues = [];
+  subscription;
 
   gameDisplayedColumns = ['date', 'available', 'inviteStatus', 'menu'];
   gameDataSource = new MatTableDataSource(GAMES_ELEMENT_DATA);
@@ -24,8 +26,14 @@ export class LeagueComponent implements OnInit {
   }
 
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.league = this.leagueService.getLeague(id);
+//    let id = this.route.snapshot.paramMap.get('id');
+//    this.league = this.leagueService.getLeague(id);
+    this.leagues = this.leagueService.getLeagues();
+    this.subscription = this.leagueService.leaguesChanged.subscribe(
+      () => {
+        this.leagues = this.leagueService.getLeagues();
+      }
+    );
   }
 }
 
