@@ -22,8 +22,9 @@ export class LoginComponent implements OnInit {
       /*private alertService: AlertService*/) { }
 
   ngOnInit() {
-      // reset login status
+      // reset services status
       this.authenticationService.logout();
+      this.leagueService.logout();
 
       // get return url from route parameters or default to '/welcome'
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/welcome';      
@@ -44,5 +45,4 @@ export class LoginComponent implements OnInit {
               }
           );
   }
-
 }
