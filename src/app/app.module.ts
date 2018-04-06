@@ -21,6 +21,8 @@ import { AuthGuard } from './_guards/index';
 import { RegisterComponent } from './register/register.component';
 import { UserService } from './_services/user.service';
 import { LeagueMgtComponent } from './league-mgt/league-mgt.component';
+import { AuthInterceptor } from './_helpers/auth_interceptor';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 const routes = [
   { path: '', component: LoginComponent },
@@ -65,11 +67,21 @@ const routes = [
     MatExpansionModule,
     MatGridListModule,
     HttpModule,
+    HttpClientModule,
     NoopAnimationsModule,
     RouterModule.forRoot(routes),
     DndModule.forRoot()
   ],
-  providers: [LeagueService, AuthenticationService, UserService, AuthGuard],
+  providers: [
+    LeagueService, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }, 
+    AuthenticationService, 
+    UserService, 
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

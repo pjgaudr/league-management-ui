@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment';
+import { catchError, retry } from 'rxjs/operators';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+
+export interface League {
+  id: number,
+  name: string
+};
 
 @Injectable()
 export class LeagueService {
@@ -20,8 +27,7 @@ export class LeagueService {
   allLeaguesChanged = new Subject<void>();
 
   constructor(
-    private http: Http) {
-
+    private httpClient: HttpClient) {
     }
     
   getLeagues() {
@@ -44,7 +50,6 @@ export class LeagueService {
     
   getLeague(id): any {
     var league = this.leagues.find(league => league.id == id);
-    // this.setSelectedLeague(league);
     return league;
   }
 
@@ -52,160 +57,64 @@ export class LeagueService {
     this.leaguesLoading = true;
     var user = JSON.parse(localStorage.getItem('currentUser'));
 
-    const headerDict = {
-      "Authorization": "Basic " + user.auth,
-    }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new Headers(headerDict), 
-      withCredentials: true
-    };
-
     var fetchUrl = this.leaguesUrl + "?playerId=" + user.id;
-    console.log(fetchUrl);
 
-    this.http.get(fetchUrl, requestOptions)
-      .map(
-        (response: Response) => {
-            return response.json();
-        }
-      )
+    this.httpClient.get<League[]>(fetchUrl)
       .subscribe(
-        (data) => {
+        data => {
             this.leaguesLoading = false;
-            this.leaguesInitialized = true;
             this.leagues = data;
-            console.log('Fetched from server: ');
-            console.log(this.leagues);
+            this.leaguesInitialized = true;
             this.leaguesChanged.next();
+        },
+        err => {
+            console.error(err);
         }
     );
   }
   
   fetchAllLeagues()  {
     this.allLeaguesLoading = true;
-    var user = JSON.parse(localStorage.getItem('currentUser'));
-
-    const headerDict = {
-      "Authorization": "Basic " + user.auth,
-    }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new Headers(headerDict), 
-      withCredentials: true
-    };
-
-    this.http.get(this.leaguesUrl, requestOptions)
-      .map(
-        (response: Response) => {
-            return response.json();
-        }
-      )
+    this.httpClient.get<League[]>(this.leaguesUrl)
       .subscribe(
-        (data) => {
+        data => {
             this.allLeaguesLoading = false;
-            this.allLeaguesInitialized = true;
             this.allLeagues = data;
-            console.log('Fetched from server: ');
-            console.log(this.allLeagues);
+            this.allLeaguesInitialized = true;
             this.allLeaguesChanged.next();
+        },
+        err => {
+            console.error(err);
         }
-    );
+      );
   }
 
   createLeague(leagueName: String) {
     var authenticateUrl = "http://localhost:8080/leagues?leagueName=" + leagueName;
-    var user = JSON.parse(localStorage.getItem('currentUser'));
 
-    const headerDict = {
-      "Authorization": "Basic " + user.auth,
-      'Content-Type': 'application/json' 
-    }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new Headers(headerDict), 
-      withCredentials: true
-    };
-
-    return this.http.post(authenticateUrl, '{}', requestOptions)
-      .map(
-        (response: Response) => {
-            if(response.status == 201)
-            {
-              console.log("League " + leagueName + " created successfully");
-            }
-            else
-            {
-              console.error("Could not create league " + leagueName);
-            }
-
-            return response.json();
-        }
-      );
+    return this.httpClient.post(authenticateUrl, '{}').pipe(
+      catchError(this.handleError)
+    );
   }
 
   createGames(leagueId, startDate, numberOfGames): any {
     var formatedDate = moment(startDate).format('YYYY-MM-DD');
     var newSeasonUrl = "http://localhost:8080/games/newSeason?leagueId=" + leagueId +
                           "&startDate=" + formatedDate + "&numberOfGames=" + numberOfGames;
-    var user = JSON.parse(localStorage.getItem('currentUser'));
 
-    const headerDict = {
-      "Authorization": "Basic " + user.auth,
-      'Content-Type': 'application/json' 
-    }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new Headers(headerDict), 
-      withCredentials: true
-    };
-
-    return this.http.post(newSeasonUrl, '{}', requestOptions)
-      .map(
-        (response: Response) => {
-            if(response.status == 200)
-            {
-              console.log(numberOfGames + " games created in league " + leagueId);
-            }
-            else
-            {
-              console.error("Could not create games for league " + leagueId);
-            }
-
-            return response.json();
-        }
-      );
+    return this.httpClient.post(newSeasonUrl, '{}').pipe(
+      catchError(this.handleError)
+    );
   }
   
   requestToJoin(leagueId, subscription): any {    
     var user = JSON.parse(localStorage.getItem('currentUser'));
-    var requestToJoinUrl = "http://localhost:8080/leagues/" + leagueId + "/requests/" + user.id;
+    var requestToJoinUrl = "http://localhost:8080/leagues/" + leagueId + "/requests/" 
+                            + user.id + "?subscription=" + subscription;
 
-    const headerDict = {
-      "Authorization": "Basic " + user.auth,
-      'Content-Type': 'application/json' 
-    }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new Headers(headerDict), 
-      withCredentials: true
-    };
-
-    return this.http.post(requestToJoinUrl, '{}', requestOptions)
-      .map(
-        (response: Response) => {
-            if(response.status == 204)
-            {
-              console.log("Request to join " + leagueId + " created successfully");
-            }
-            else
-            {
-              console.error("Could not send request for user " + user.firstName + " to join league " + leagueId);
-            }
-
-            return response.json();
-        }
-      );
+    return this.httpClient.post(requestToJoinUrl, '{}').pipe(
+      catchError(this.handleError)
+    );
   }
 
   logout() {
@@ -215,19 +124,20 @@ export class LeagueService {
     this.allLeaguesInitialized = false;
   }
 
-  // private selectedLeague;
-  // selectedLeagueChanged = new Subject<void>();
-  
-  // setSelectedLeague(league) {
-  //   this.selectedLeague = league;
-  //   this.selectedLeagueChanged.next();
-  // }
-
-  // getSelectedLeague() {
-  //   return this.selectedLeague;
-  // }
-
-  // getDefaultLeague(): any {
-  //   return this.leagues[0];
-  // }
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was:`);
+      console.error(error.error);  
+    }
+    // return an ErrorObservable with a user-facing error message
+    return new ErrorObservable (
+      'Something bad happened; please try again later.');
+  };
 }

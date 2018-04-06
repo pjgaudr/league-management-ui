@@ -12,7 +12,6 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot) {
 
       if (localStorage.getItem('currentUser')) {
-        console.log("Already logged in");
         // logged in so return true
         return true;
       }
