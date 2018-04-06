@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
+import * as moment from 'moment';
 
 @Injectable()
 export class LeagueService {
@@ -136,6 +137,70 @@ export class LeagueService {
             else
             {
               console.error("Could not create league " + leagueName);
+            }
+
+            return response.json();
+        }
+      );
+  }
+
+  createGames(leagueId, startDate, numberOfGames): any {
+    var formatedDate = moment(startDate).format('YYYY-MM-DD');
+    var newSeasonUrl = "http://localhost:8080/games/newSeason?leagueId=" + leagueId +
+                          "&startDate=" + formatedDate + "&numberOfGames=" + numberOfGames;
+    var user = JSON.parse(localStorage.getItem('currentUser'));
+
+    const headerDict = {
+      "Authorization": "Basic " + user.auth,
+      'Content-Type': 'application/json' 
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+      withCredentials: true
+    };
+
+    return this.http.post(newSeasonUrl, '{}', requestOptions)
+      .map(
+        (response: Response) => {
+            if(response.status == 200)
+            {
+              console.log(numberOfGames + " games created in league " + leagueId);
+            }
+            else
+            {
+              console.error("Could not create games for league " + leagueId);
+            }
+
+            return response.json();
+        }
+      );
+  }
+  
+  requestToJoin(leagueId, subscription): any {    
+    var user = JSON.parse(localStorage.getItem('currentUser'));
+    var requestToJoinUrl = "http://localhost:8080/leagues/" + leagueId + "/requests/" + user.id;
+
+    const headerDict = {
+      "Authorization": "Basic " + user.auth,
+      'Content-Type': 'application/json' 
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new Headers(headerDict), 
+      withCredentials: true
+    };
+
+    return this.http.post(requestToJoinUrl, '{}', requestOptions)
+      .map(
+        (response: Response) => {
+            if(response.status == 204)
+            {
+              console.log("Request to join " + leagueId + " created successfully");
+            }
+            else
+            {
+              console.error("Could not send request for user " + user.firstName + " to join league " + leagueId);
             }
 
             return response.json();
