@@ -5,13 +5,11 @@
 
     <span *ngIf="leagues.length == 1">{{leagues[0].name}}</span>
     <span *ngIf="leagues.length > 1">
-        <mat-form-field>
-            <mat-select placeholder="Select a league">
-            <mat-option *ngFor="let league of leagues" [value]="league.id">
-                {{ league.name }}
-            </mat-option>
-            </mat-select>
-        </mat-form-field>
+        <select class="form-control">
+            <option *ngFor="let league of leagues" [value]="league.id">
+              {{ league.name }}
+            </option>
+        </select>
     </span>
           
     <!-- This fills the remaining space of the current row -->
