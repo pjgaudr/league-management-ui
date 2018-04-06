@@ -143,6 +143,13 @@ export class LeagueService {
       );
   }
 
+  logout() {
+    this.leagues = [];
+    this.leaguesInitialized = false;
+    this.allLeagues = [];
+    this.allLeaguesInitialized = false;
+  }
+
   // private selectedLeague;
   // selectedLeagueChanged = new Subject<void>();
   
