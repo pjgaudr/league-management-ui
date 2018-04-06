@@ -45,9 +45,16 @@ export class LeagueMgtComponent implements OnInit {
   }
 
   createGames() {
-    // TODO: call the /games/newseason REST call
     this.gameLoading = true;
-    console.log(this.gameModel);
-    this.gameLoading = false;
+    this.leagueService.createGames(this.gameModel.leagueId, this.gameModel.startDate, this.gameModel.numberOfGames)
+        .subscribe(
+            data => {
+                console.log('Games created successfully');
+                this.gameLoading = false;
+            },
+            error => {
+                console.error(error);
+                this.gameLoading = false;
+            });
   }
 }

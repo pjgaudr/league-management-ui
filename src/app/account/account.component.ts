@@ -43,7 +43,15 @@ export class AccountComponent implements OnInit {
 
   requestToJoin() {
     this.loading = true;
-    
+    this.leagueService.requestToJoin(this.model.leagueId, this.model.subscription)
+    .subscribe(
+        data => {
+            console.log("Request to join " + this.model.leagueId + " sent");
+            this.loading = false;
+        },
+        error => {
+            console.error(error);
+            this.loading = false;
+        });
   }
-
 }
