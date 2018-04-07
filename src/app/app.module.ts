@@ -21,7 +21,7 @@ import { AuthGuard } from './_guards/index';
 import { RegisterComponent } from './register/register.component';
 import { PlayerService } from './_services/player.service';
 import { LeagueMgtComponent } from './league-mgt/league-mgt.component';
-import { AuthInterceptor } from './_helpers/auth_interceptor';
+import { AuthInterceptor } from './_helpers/auth.interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpErrorHandlingHelper } from './_helpers/http.error.handling';
 
