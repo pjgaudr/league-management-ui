@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LeagueService } from '../_services/league.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-league-mgt',
@@ -17,7 +18,8 @@ export class LeagueMgtComponent implements OnInit {
   gameLoading = false;
   startDate = new Date(2018, 8, 1);
 
-  constructor(private leagueService: LeagueService) { }
+  constructor(private leagueService: LeagueService,
+              public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.leagues = this.leagueService.getLeagues();
@@ -33,13 +35,11 @@ export class LeagueMgtComponent implements OnInit {
     this.leagueService.createLeague(this.model.leagueName)
         .subscribe(
             data => {
-                //this.alertService.success('Registration successful', true);
-                console.log('League created successfully');
+                this.snackBar.open('League ' + this.model.leagueName + ' created successfully', 'Ok', {duration: 3000});            
                 this.loading = false;
             },
             error => {
-                //this.alertService.error(error);
-                console.error(error);
+                this.snackBar.open('ERROR - Could not create league ' + this.model.leagueName, 'Ok', {duration: 3000});            
                 this.loading = false;
             });
   }
@@ -49,11 +49,11 @@ export class LeagueMgtComponent implements OnInit {
     this.leagueService.createGames(this.gameModel.leagueId, this.gameModel.startDate, this.gameModel.numberOfGames)
         .subscribe(
             data => {
-                console.log('Games created successfully');
+                this.snackBar.open(this.model.numberOfGames + ' games created successfully', 'Ok', {duration: 3000});            
                 this.gameLoading = false;
             },
             error => {
-                console.error(error);
+                this.snackBar.open('ERROR - Could not create games', 'Ok', {duration: 3000});            
                 this.gameLoading = false;
             });
   }

@@ -99,7 +99,7 @@ export class LeagueService {
 
   createGames(leagueId, startDate, numberOfGames): any {
     var formatedDate = moment(startDate).format('YYYY-MM-DD');
-    var newSeasonUrl = "http://localhost:8080/games/newSeason?leagueId=" + leagueId +
+    var newSeasonUrl = "http://localhost:8080/games/newseason?leagueId=" + leagueId +
                           "&startDate=" + formatedDate + "&numberOfGames=" + numberOfGames;
 
     return this.httpClient.post(newSeasonUrl, '{}').pipe(
