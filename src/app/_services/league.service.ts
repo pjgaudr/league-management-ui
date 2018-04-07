@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import * as moment from 'moment';
 import { catchError, retry } from 'rxjs/operators';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { HttpErrorHandlingHelper } from '../_helpers/http.error.handling';
 
 export interface League {
   id: number,
@@ -27,7 +28,8 @@ export class LeagueService {
   allLeaguesChanged = new Subject<void>();
 
   constructor(
-    private httpClient: HttpClient) {
+    private httpClient: HttpClient,
+    private errorHelper: HttpErrorHandlingHelper) {
     }
     
   getLeagues() {
@@ -93,7 +95,7 @@ export class LeagueService {
     var authenticateUrl = "http://localhost:8080/leagues?leagueName=" + leagueName;
 
     return this.httpClient.post(authenticateUrl, '{}').pipe(
-      catchError(this.handleError)
+      catchError(error => this.errorHelper.handleError(error))
     );
   }
 
@@ -103,7 +105,7 @@ export class LeagueService {
                           "&startDate=" + formatedDate + "&numberOfGames=" + numberOfGames;
 
     return this.httpClient.post(newSeasonUrl, '{}').pipe(
-      catchError(this.handleError)
+      catchError(error => this.errorHelper.handleError(error))
     );
   }
   
@@ -113,7 +115,7 @@ export class LeagueService {
                             + user.id + "?subscription=" + subscription;
 
     return this.httpClient.post(requestToJoinUrl, '{}').pipe(
-      catchError(this.handleError)
+      catchError(error => this.errorHelper.handleError(error))
     );
   }
 
@@ -123,21 +125,4 @@ export class LeagueService {
     this.allLeagues = [];
     this.allLeaguesInitialized = false;
   }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was:`);
-      console.error(error.error);  
-    }
-    // return an ErrorObservable with a user-facing error message
-    return new ErrorObservable (
-      'Something bad happened; please try again later.');
-  };
 }
