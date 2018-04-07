@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../_services/user.service';
+import { PlayerService } from '../_services/player.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-register',
@@ -14,21 +15,19 @@ export class RegisterComponent {
 
   constructor(
       private router: Router,
-      private userService: UserService,
-      /*private alertService: AlertService*/) { }
+      private userService: PlayerService,
+      public snackBar: MatSnackBar) { }
 
   register() {
       this.loading = true;
-      this.userService.createUser(this.model)
+      this.userService.createPlayer(this.model)
           .subscribe(
               data => {
-                  //this.alertService.success('Registration successful', true);
-                  console.log('Registration successful');
+                  this.snackBar.open("Registration successful", 'Ok', {duration: 3000});            
                   this.router.navigate(['/login']);
               },
               error => {
-                  //this.alertService.error(error);
-                  console.error(error);
+                  this.snackBar.open("ERROR - Registration failed", 'Ok', {duration: 3000});            
                   this.loading = false;
               });
   }

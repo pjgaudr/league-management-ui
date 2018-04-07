@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule, MatSlideToggleModule, MatMenuModule, MatCheckboxModule, MatDatepicker, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatCardModule, MatExpansionModule, MatGridListModule} from '@angular/material';
+import { MatChipsModule, MatTableModule, MatToolbarModule, MatIconModule, MatTabsModule, MatSlideToggleModule, MatMenuModule, MatCheckboxModule, MatDatepicker, MatDatepickerModule, MatNativeDateModule, MatSortModule, MatCardModule, MatExpansionModule, MatGridListModule, MatSnackBar, MatSnackBarModule} from '@angular/material';
 import { NgModule, Injectable } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule, ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, Router } from '@angular/router';
@@ -19,7 +19,7 @@ import { AuthenticationService } from './_services/authentication.service';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './_guards/index';
 import { RegisterComponent } from './register/register.component';
-import { UserService } from './_services/user.service';
+import { PlayerService } from './_services/player.service';
 import { LeagueMgtComponent } from './league-mgt/league-mgt.component';
 import { AuthInterceptor } from './_helpers/auth_interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -66,6 +66,7 @@ const routes = [
     MatCardModule,
     MatExpansionModule,
     MatGridListModule,
+    MatSnackBarModule,
     HttpModule,
     HttpClientModule,
     NoopAnimationsModule,
@@ -73,14 +74,14 @@ const routes = [
     DndModule.forRoot()
   ],
   providers: [
-    LeagueService, 
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
     }, 
+    LeagueService, 
     AuthenticationService, 
-    UserService, 
+    PlayerService, 
     AuthGuard],
   bootstrap: [AppComponent]
 })

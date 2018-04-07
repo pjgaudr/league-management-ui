@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // add authorization header with jwt token if available
-        let user = JSON.parse(localStorage.getItem('currentUser'));
+        // add authorization header with the currentUser token if available
+        let user = JSON.parse(localStorage.getItem('currentUser'));        
 
         if (user) {
             request = request.clone({

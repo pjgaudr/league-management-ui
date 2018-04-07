@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LeagueService } from '../_services/league.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-account',
@@ -21,7 +22,8 @@ export class AccountComponent implements OnInit {
 
   loading = false;
 
-  constructor(private leagueService: LeagueService) { }
+  constructor(private leagueService: LeagueService,
+              public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.allLeagues = this.leagueService.getAllLeagues();
@@ -46,11 +48,11 @@ export class AccountComponent implements OnInit {
     this.leagueService.requestToJoin(this.model.leagueId, this.model.subscription)
     .subscribe(
         data => {
-            console.log("Request to join " + this.model.leagueId + " sent");
+            this.snackBar.open("Request to join league " + this.model.leagueId + " sent", 'Ok', {duration: 3000});            
             this.loading = false;
         },
         error => {
-            console.error(error);
+            this.snackBar.open("ERROR - Request to join " + this.model.leagueId + " failed", 'Ok', {duration: 3000});            
             this.loading = false;
         });
   }
