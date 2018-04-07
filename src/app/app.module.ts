@@ -84,7 +84,7 @@ const routes = [
     AuthenticationService, 
     PlayerService, 
     AuthGuard,
-    ErrorHandlingHelper],
+    HttpErrorHandlingHelper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
