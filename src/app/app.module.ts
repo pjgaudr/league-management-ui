@@ -9,7 +9,7 @@ import { PlayerDashboardComponent } from './player-dashboard/player-dashboard.co
 import { WelcomeComponent } from './welcome/welcome.component';
 import { InvitationsComponent } from './invitations/invitations.component';
 import { LineupComponent } from './lineup/lineup.component';
-import { AdminComponent } from './admin/admin.component';
+import { ManagerDashboardComponent } from './manager-dashboard/manager-dashboard.component';
 import { AccountComponent } from './account/account.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
@@ -31,7 +31,7 @@ const routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'welcome', component: PlayerDashboardComponent, canActivate: [AuthGuard] },
 //  { path: 'league/:id', component: PlayerDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: ManagerDashboardComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
   { path: '**', component: LoginComponent }
 ];
@@ -43,7 +43,7 @@ const routes = [
     WelcomeComponent,
     InvitationsComponent,
     LineupComponent,
-    AdminComponent,
+    ManagerDashboardComponent,
     AccountComponent,
     LoginComponent,
     RegisterComponent,
