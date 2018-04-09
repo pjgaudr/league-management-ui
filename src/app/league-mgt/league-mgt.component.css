@@ -4,6 +4,11 @@
     max-width: 400px;
 }
 
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 ::ng-deep .mat-sort-header-arrow.ng-trigger.ng-trigger-arrowPosition {
     opacity: 0;
 }

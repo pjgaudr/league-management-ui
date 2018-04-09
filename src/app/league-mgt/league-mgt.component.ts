@@ -10,24 +10,41 @@ import {MatSnackBar} from '@angular/material';
 export class LeagueMgtComponent implements OnInit {
   model: any = {};
   gameModel: any = {};
+  deleteModel: any = {};
   
   leagues = [];
   subscription;
 
+  allLeagues = [];
+  allLeaguesSubscription;
+
   loading = false;
   gameLoading = false;
+  deleteLoading = false;
   startDate = new Date(2018, 8, 1);
 
   constructor(private leagueService: LeagueService,
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.allLeagues = this.leagueService.getAllLeagues();
+    this.allLeaguesSubscription = this.leagueService.allLeaguesChanged.subscribe(
+      () => {
+        this.allLeagues = this.leagueService.getAllLeagues();
+      }
+    );
+
     this.leagues = this.leagueService.getLeagues();
     this.subscription = this.leagueService.leaguesChanged.subscribe(
       () => {
         this.leagues = this.leagueService.getLeagues();
       }
     );
+  }
+
+  deleteLeague() {
+    //TODO: implement this method!
+    this.deleteLoading = true;
   }
 
   createLeague() {

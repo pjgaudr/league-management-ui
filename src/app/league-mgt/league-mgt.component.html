@@ -1,7 +1,8 @@
 <!--div class="row">
   <div class="col-sm-3"-->
-<mat-accordion>
-    <mat-expansion-panel>
+<mat-accordion class="container">
+    <div class="row">
+    <mat-expansion-panel class="col-sm-4">
         <mat-expansion-panel-header>
             <mat-panel-title>Create a new league</mat-panel-title>
         </mat-expansion-panel-header>
@@ -17,7 +18,32 @@
             </div>    
         </form>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel class="col-sm-4">
+        <mat-expansion-panel-header>
+            <mat-panel-title>Delete an existing league</mat-panel-title>
+        </mat-expansion-panel-header>
+        <form name="form3" (ngSubmit)="f3.form.valid && deleteLeague()" #f3="ngForm" novalidate>
+            <div class="form-group" [ngClass]="{ 'has-error': f3.submitted && !deleteLeagueId.valid }">
+                <label for="deleteLeagueId">League</label>
+                <div>
+                    <select class="form-control-date-picker" name="deleteLeagueId" [(ngModel)]="deleteModel.leagueId" #deleteLeagueId="ngModel" required>
+                        <option selected>Choose a league...</option>
+                        <option *ngFor="let league of allLeagues" [value]="league.id">
+                            {{ league.name }}
+                        </option>
+                    </select>
+                </div>
+                <div *ngIf="f3.submitted && !deleteLeagueId.valid" class="help-block">League is required</div>
+            </div>
+            <div class="form-group">
+                    <button [disabled]="deleteLoading" class="btn btn-primary">Delete</button>
+                        <img *ngIf="deleteLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>    
+        </form>                
+    </mat-expansion-panel>
+    </div>
+    <div class="row">
+    <mat-expansion-panel class="col-sm-4">
         <mat-expansion-panel-header>
             <mat-panel-title>Create a sequence of games</mat-panel-title>
         </mat-expansion-panel-header>
@@ -54,4 +80,17 @@
             </div>    
         </form>
     </mat-expansion-panel>    
+    <mat-expansion-panel class="col-sm-4">
+        <mat-expansion-panel-header>
+            <mat-panel-title>Delete a game</mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    </div>
+    <div class="row">
+        <mat-expansion-panel class="col-sm-4">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Requests to join the league</mat-panel-title>
+        </mat-expansion-panel-header>
+        </mat-expansion-panel>
+    </div>
 </mat-accordion>    
