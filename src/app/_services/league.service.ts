@@ -59,7 +59,7 @@ export class LeagueService {
     this.leaguesLoading = true;
     var user = JSON.parse(localStorage.getItem('currentUser'));
 
-    var fetchUrl = this.leaguesUrl + "?playerId=" + user.id;
+    var fetchUrl = this.leaguesUrl + "?playerId=" + user.sub;
 
     this.httpClient.get<League[]>(fetchUrl)
       .subscribe(
@@ -112,7 +112,7 @@ export class LeagueService {
   requestToJoin(leagueId, subscription): any {    
     var user = JSON.parse(localStorage.getItem('currentUser'));
     var requestToJoinUrl = "http://localhost:8080/leagues/" + leagueId + "/requests/" 
-                            + user.id + "?subscription=" + subscription;
+                            + user.sub + "?subscription=" + subscription;
 
     return this.httpClient.post(requestToJoinUrl, '{}').pipe(
       catchError(error => this.errorHelper.handleError(error))

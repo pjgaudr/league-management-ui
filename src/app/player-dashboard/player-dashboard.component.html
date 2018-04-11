@@ -4,7 +4,7 @@
 <div *ngIf="leagues.length == 0">
   <p>You are not registered to any league.  Please first register to a league in your <a routerLink="/account">Profile</a></p>
 </div>
-<div *ngIf="leagues.length > 1">
+<!-- <div *ngIf="leagues.length > 1">
   <mat-form-field>
     <mat-select placeholder="Select a league">
       <mat-option *ngFor="let league of leagues" [value]="league.id">
@@ -12,8 +12,8 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-</div>
-<div *ngIf="leagues.length == 1">
+</div> -->
+<div *ngIf="leagues.length >= 1">
   <mat-table #table2 [dataSource]="gameDataSource">
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef> {{leagues[0].name}} Game Date </mat-header-cell>
