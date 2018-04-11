@@ -21,26 +21,31 @@ export class AuthenticationService {
           withCredentials: true
         };
     
-        return this.http.post(authenticateUrl + "?email=" + username, '{}', requestOptions)
+        return this.http.get(authenticateUrl + "?email=" + username, requestOptions)
           .map(
             (response: Response) => {
                 if(response.status == 200)
                 {
                   console.log("Login successfull as " + username);
-                  var user = response.json();
-                  user.auth = auth;
+                  var jwt = response.text();
+                  var user: any = this.decodeToken(jwt);
                   console.log(user);
+                  user.jwt = jwt;
                   localStorage.setItem('currentUser', JSON.stringify(user));
+                  return user;
                 }
                 else
                 {
                   console.error("Forbidden access to " + username);
                 }
-
-                return response.json();
             }
           );
     }
+    
+    decodeToken(token) : any {
+      var payload = JSON.parse(atob(token.split('.')[1]));
+      return payload;    
+    };
 
     logout() {
         // remove user from local storage to log user out
