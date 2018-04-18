@@ -70,7 +70,7 @@ export class AuthenticationService {
                 }
                 else
                 {
-                  console.error("Forbidden access to " + username);
+                  throw new Error('Unexpexted response from server: '+ response.status);
                 }
             }
           );
