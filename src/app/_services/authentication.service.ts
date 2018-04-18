@@ -36,7 +36,7 @@ export class AuthenticationService {
 
         const headerDict = {
           "Authorization": "Basic " + auth,
-          'Content-Type': 'application/json' 
+          'accept': 'text/plain' 
         }
         
         const requestOptions = {                                                                                                                                                                                 
@@ -44,7 +44,7 @@ export class AuthenticationService {
           withCredentials: true
         };
     
-        return this.http.get(authenticateUrl + "?email=" + username, requestOptions)
+        return this.http.get(authenticateUrl, requestOptions)
           .map(
             (response: Response) => {
                 if(response.status == 200)
