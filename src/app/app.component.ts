@@ -27,8 +27,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.leaguesChangedSubscription = this.leagueService.leaguesChanged.subscribe(
-      () => {
-        this.leagues = this.leagueService.getLeagues();
+      (leagues) => {
+        this.leagues = leagues;
         if(this.leagues.length > 0)
         {
           this.selectedLeague = this.leagues[0].id;

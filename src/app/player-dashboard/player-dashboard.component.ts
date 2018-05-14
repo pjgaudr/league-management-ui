@@ -28,10 +28,9 @@ export class PlayerDashboardComponent implements OnInit {
   ngOnInit() {
 //    let id = this.route.snapshot.paramMap.get('id');
 //    this.league = this.leagueService.getLeague(id);
-    this.leagues = this.leagueService.getLeagues();
     this.subscription = this.leagueService.leaguesChanged.subscribe(
-      () => {
-        this.leagues = this.leagueService.getLeagues();
+      (leagues) => {
+        this.leagues = leagues;
       }
     );
   }

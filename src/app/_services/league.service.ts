@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { catchError, retry } from 'rxjs/operators';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { HttpErrorHandlingHelper } from '../_helpers/http.error.handling';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export interface League {
   id: number,
@@ -20,12 +21,12 @@ export class LeagueService {
   private leagues = [];
   private leaguesInitialized = false;
   private leaguesLoading = false;
-  leaguesChanged = new Subject<void>();
+  leaguesChanged = new BehaviorSubject<League[]>(this.leagues);
 
   private allLeagues = [];
   private allLeaguesInitialized = false;
   private allLeaguesLoading = false;
-  allLeaguesChanged = new Subject<void>();
+  allLeaguesChanged = new BehaviorSubject<League[]>(this.allLeagues);
 
   constructor(
     private httpClient: HttpClient,
@@ -67,7 +68,7 @@ export class LeagueService {
             this.leaguesLoading = false;
             this.leagues = data;
             this.leaguesInitialized = true;
-            this.leaguesChanged.next();
+            this.leaguesChanged.next(data);
         },
         err => {
             console.error(err);
@@ -83,7 +84,7 @@ export class LeagueService {
             this.allLeaguesLoading = false;
             this.allLeagues = data;
             this.allLeaguesInitialized = true;
-            this.allLeaguesChanged.next();
+            this.allLeaguesChanged.next(data);
         },
         err => {
             console.error(err);

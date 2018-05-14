@@ -14,16 +14,14 @@ export class WelcomeComponent implements OnInit {
 
   constructor(
     private leagueService: LeagueService) {
-      console.log("New WelcomeComponent");
     }
-
 
   ngOnInit() {  
     this.leagueService.fetchLeagues();
 
     this.subscription = this.leagueService.leaguesChanged.subscribe(
-      () => {
-        this.leagues = this.leagueService.getLeagues();
+      (leagues) => {
+        this.leagues = leagues;
       }
     );
 
