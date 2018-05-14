@@ -17,7 +17,7 @@ export class WelcomeComponent implements OnInit {
     }
 
   ngOnInit() {  
-    this.leagueService.fetchLeagues();
+    this.leagueService.initialize();
 
     this.subscription = this.leagueService.leaguesChanged.subscribe(
       (leagues) => {

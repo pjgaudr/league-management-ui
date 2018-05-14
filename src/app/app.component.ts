@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
+    // Initialize the leagueService in case we are already logged in
+    this.leagueService.initialize();
+    
     this.leaguesChangedSubscription = this.leagueService.leaguesChanged.subscribe(
       (leagues) => {
         this.leagues = leagues;
