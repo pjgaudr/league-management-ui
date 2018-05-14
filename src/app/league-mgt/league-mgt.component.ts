@@ -35,10 +35,9 @@ export class LeagueMgtComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.allLeagues = this.leagueService.getAllLeagues();
     this.allLeaguesSubscription = this.leagueService.allLeaguesChanged.subscribe(
-      () => {
-        this.allLeagues = this.leagueService.getAllLeagues();
+      (leagues) => {
+        this.allLeagues = leagues;
       }
     );
 
