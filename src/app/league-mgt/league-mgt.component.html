@@ -87,10 +87,38 @@
     </mat-expansion-panel>
     </div>
     <div class="row">
-        <mat-expansion-panel class="col-sm-4">
-            <mat-expansion-panel-header>
-                <mat-panel-title>Requests to join the league</mat-panel-title>
+    <mat-expansion-panel class="col-sm-8">
+        <mat-expansion-panel-header>
+            <mat-panel-title>Requests to join the league</mat-panel-title>
         </mat-expansion-panel-header>
-        </mat-expansion-panel>
+        <mat-table #table [dataSource]="requestsDataSource" matSort>
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.player.lastName}}, {{element.player.firstName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.player.email}} </mat-cell>
+            </ng-container>    
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Position </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.player.position}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="subscription">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Subscription </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.subscription}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="button">
+                <mat-header-cell *matHeaderCellDef>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button type="button" (click)="acceptRequest(element)">Accept</button> 
+                    <button type="button" (click)="refuseRequest(element)">Refuse</button> 
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="requestsDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: requestsDisplayedColumns;"></mat-row>
+        </mat-table>                
+    </mat-expansion-panel>
     </div>
 </mat-accordion>    

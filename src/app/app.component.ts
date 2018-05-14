@@ -13,8 +13,7 @@ export class AppComponent implements OnInit {
 
   title = 'Hockey League Management';
 
-  selectedLeague;
-  selectedLeagueChangedSubscription;
+  selectedLeague:String = '';
 
   leagues = [];
   leaguesChangedSubscription;
@@ -27,19 +26,22 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
+    // Initialize the leagueService in case we are already logged in
+    this.leagueService.initialize();
+    
     this.leaguesChangedSubscription = this.leagueService.leaguesChanged.subscribe(
-      () => {
-        this.leagues = this.leagueService.getLeagues();
+      (leagues) => {
+        this.leagues = leagues;
+        if(this.leagues.length > 0)
+        {
+          this.selectedLeague = this.leagues[0].id;
+        }
       }
     );
-
-    // this.selectedLeagueChangedSubscription = this.leagueService.selectedLeagueChanged.subscribe(
-    //   () => {
-    //     this.selectedLeague = this.leagueService.getSelectedLeague();
-    //     console.log("selectedLeague changed, trying to refresh to:" );
-    //     this.changeDetectorRef.detectChanges();
-    //   }       
-    // );
   }
-  
+
+  getSelectedLeague()
+  {
+      return this.selectedLeague;
+  }
 }

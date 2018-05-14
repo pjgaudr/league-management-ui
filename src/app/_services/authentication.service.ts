@@ -33,7 +33,7 @@ export class AuthenticationService {
     login(username: string, password: string) {
         var authenticateUrl = "http://localhost:8080/auth/login";
         var auth = window.btoa(username + ":" + password);
-
+        
         const headerDict = {
           "Authorization": "Basic " + auth,
           'accept': 'text/plain' 

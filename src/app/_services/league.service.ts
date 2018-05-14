@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { catchError, retry } from 'rxjs/operators';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { HttpErrorHandlingHelper } from '../_helpers/http.error.handling';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export interface League {
   id: number,
@@ -18,56 +19,38 @@ export class LeagueService {
   private leaguesUrl = 'http://localhost:8080/leagues';  // URL to web api
 
   private leagues = [];
-  private leaguesInitialized = false;
-  private leaguesLoading = false;
-  leaguesChanged = new Subject<void>();
+  leaguesChanged = new BehaviorSubject<League[]>(this.leagues);
 
   private allLeagues = [];
-  private allLeaguesInitialized = false;
-  private allLeaguesLoading = false;
-  allLeaguesChanged = new Subject<void>();
+  allLeaguesChanged = new BehaviorSubject<League[]>(this.allLeagues);
 
   constructor(
     private httpClient: HttpClient,
     private errorHelper: HttpErrorHandlingHelper) {
     }
     
-  getLeagues() {
-    if(!this.leaguesInitialized && !this.leaguesLoading)
-    {
-      this.fetchLeagues();
-    }
-      
-    return this.leagues.slice();
-  }
-    
-  getAllLeagues() {
-    if(!this.allLeaguesInitialized && !this.allLeaguesLoading)
-    {
-      this.fetchAllLeagues();
-    }
-      
-    return this.allLeagues.slice();
-  }
-    
   getLeague(id): any {
     var league = this.leagues.find(league => league.id == id);
     return league;
   }
 
-  fetchLeagues()  {
-    this.leaguesLoading = true;
+  initialize() {
     var user = JSON.parse(localStorage.getItem('currentUser'));
+    if(user)
+    {
+      this.fetchLeagues(user);
+      this.fetchAllLeagues();
+    }
+  }
 
+  fetchLeagues(user:any)  {
     var fetchUrl = this.leaguesUrl + "?playerId=" + user.sub;
 
     this.httpClient.get<League[]>(fetchUrl)
       .subscribe(
         data => {
-            this.leaguesLoading = false;
             this.leagues = data;
-            this.leaguesInitialized = true;
-            this.leaguesChanged.next();
+            this.leaguesChanged.next(data);
         },
         err => {
             console.error(err);
@@ -76,14 +59,11 @@ export class LeagueService {
   }
   
   fetchAllLeagues()  {
-    this.allLeaguesLoading = true;
     this.httpClient.get<League[]>(this.leaguesUrl)
       .subscribe(
         data => {
-            this.allLeaguesLoading = false;
             this.allLeagues = data;
-            this.allLeaguesInitialized = true;
-            this.allLeaguesChanged.next();
+            this.allLeaguesChanged.next(data);
         },
         err => {
             console.error(err);
@@ -119,10 +99,15 @@ export class LeagueService {
     );
   }
 
+  getLeagueRequests(leagueId): any {
+    var leagueRequestsUrl = "http://localhost:8080/leagues/" + leagueId + "/requests";
+    return this.httpClient.get(leagueRequestsUrl).pipe(
+      catchError(error => this.errorHelper.handleError(error))
+    );
+  }
+
   logout() {
     this.leagues = [];
-    this.leaguesInitialized = false;
     this.allLeagues = [];
-    this.allLeaguesInitialized = false;
   }
 }

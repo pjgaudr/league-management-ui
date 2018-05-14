@@ -26,17 +26,15 @@ export class AccountComponent implements OnInit {
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.allLeagues = this.leagueService.getAllLeagues();
     this.allLeaguesSubscription = this.leagueService.allLeaguesChanged.subscribe(
-      () => {
-        this.allLeagues = this.leagueService.getAllLeagues();
+      (leagues) => {
+        this.allLeagues = leagues;
       }
     );
 
-    this.leagues = this.leagueService.getLeagues();
     this.leaguesSubscription = this.leagueService.leaguesChanged.subscribe(
-      () => {
-        this.leagues = this.leagueService.getLeagues();
+      (leagues) => {
+        this.leagues = leagues;
       }
     );
 

@@ -5,7 +5,7 @@
 
     <span *ngIf="leagues.length == 1">{{leagues[0].name}}</span>
     <span *ngIf="leagues.length > 1">
-        <select class="form-control">
+        <select class="form-control" [(ngModel)]="selectedLeague">
             <option *ngFor="let league of leagues" [value]="league.id">
               {{ league.name }}
             </option>

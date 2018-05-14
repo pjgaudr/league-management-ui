@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LeagueService } from '../_services/league.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar, MatTableDataSource} from '@angular/material';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-league-mgt',
@@ -18,33 +19,44 @@ export class LeagueMgtComponent implements OnInit {
   allLeagues = [];
   allLeaguesSubscription;
 
+  leagueRequests = [];
+
   loading = false;
   gameLoading = false;
   deleteLoading = false;
   startDate = new Date(2018, 8, 1);
 
+  requestsDisplayedColumns = ['name', 'email', 'position', 'subscription', 'button'];
+  requestsDataSource;
+  
   constructor(private leagueService: LeagueService,
-              public snackBar: MatSnackBar) { }
-
-  ngOnInit() {
-    this.allLeagues = this.leagueService.getAllLeagues();
-    this.allLeaguesSubscription = this.leagueService.allLeaguesChanged.subscribe(
-      () => {
-        this.allLeagues = this.leagueService.getAllLeagues();
-      }
-    );
-
-    this.leagues = this.leagueService.getLeagues();
-    this.subscription = this.leagueService.leaguesChanged.subscribe(
-      () => {
-        this.leagues = this.leagueService.getLeagues();
-      }
-    );
+              public snackBar: MatSnackBar,
+              private appComponent: AppComponent) {
   }
 
-  deleteLeague() {
-    //TODO: implement this method!
-    this.deleteLoading = true;
+  ngOnInit() {
+    this.allLeaguesSubscription = this.leagueService.allLeaguesChanged.subscribe(
+      (leagues) => {
+        this.allLeagues = leagues;
+      }
+    );
+
+    this.subscription = this.leagueService.leaguesChanged.subscribe(
+      (leagues) => {
+        this.leagues = leagues;
+
+        if(this.leagues.length > 0)
+        {
+          this.leagueService.getLeagueRequests(this.appComponent.getSelectedLeague())
+          .subscribe(
+            data => {
+              this.leagueRequests = data;
+              this.requestsDataSource = new MatTableDataSource(this.leagueRequests);
+            }
+          );
+        }
+      }
+    );
   }
 
   createLeague() {
@@ -73,5 +85,19 @@ export class LeagueMgtComponent implements OnInit {
                 this.snackBar.open('ERROR - Could not create games', 'Ok', {duration: 3000});            
                 this.gameLoading = false;
             });
+  }
+
+  deleteLeague() {
+    //TODO: implement this method!
+    // this.deleteLoading = true;
+    // this.leagueService.deleteLeague(this.deleteModel.leagueId);
+  }
+
+  acceptRequest(request) {
+    //TODO: implement this method!
+  }
+
+  refuseRequest(request) {
+    //TODO: implement this method!
   }
 }
