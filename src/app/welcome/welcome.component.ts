@@ -14,7 +14,6 @@ export class WelcomeComponent implements OnInit {
 
   constructor(
     private leagueService: LeagueService) {
-      // leagueService.setSelectedLeague(undefined);
       console.log("New WelcomeComponent");
     }
 

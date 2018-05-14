@@ -119,6 +119,13 @@ export class LeagueService {
     );
   }
 
+  getLeagueRequests(leagueId): any {
+    var leagueRequestsUrl = "http://localhost:8080/leagues/" + leagueId + "/requests";
+    return this.httpClient.get(leagueRequestsUrl).pipe(
+      catchError(error => this.errorHelper.handleError(error))
+    );
+  }
+
   logout() {
     this.leagues = [];
     this.leaguesInitialized = false;

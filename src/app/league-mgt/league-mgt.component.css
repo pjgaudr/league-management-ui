@@ -19,3 +19,21 @@
 ::ng-deep .mat-sort-header-pointer-right.ng-trigger.ng-trigger-rightPointer{
     transform: rotate(45deg);
 }
+
+.custom-checkbox {
+    margin-left: 10px;
+    height: 20px;
+    width: 20px;
+    padding: 1px 6px
+}
+
+.custom-button {
+    min-height: 30px;
+    padding: 6px
+}
+
+.custom-cell-checkbox {
+    padding-left: 10px;
+}
+
+
