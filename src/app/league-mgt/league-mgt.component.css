@@ -38,5 +38,8 @@
 
 .notification-icon {
     margin-left: 15px;
-  }
+}
 
+.panel-extra-padding {
+    padding-right: 45px;
+}
